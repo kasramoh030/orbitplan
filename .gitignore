@@ -1,0 +1,4 @@
+.orbitplan-data/
+.env
+.env.supabase
+*.log

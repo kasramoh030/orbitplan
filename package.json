@@ -1,0 +1,19 @@
+{
+  "name": "orbitplan",
+  "version": "3.0.0",
+  "private": true,
+  "description": "OrbitPlan PWA, account, sync, calendar, and Android companion project",
+  "scripts": {
+    "start": "node cloud-server.js",
+    "check": "node --check cloud-server.js && node --check storage.js && node --check calendar-oauth.js && node --check service-worker.js",
+    "start:postgres": "DATABASE_URL=postgres://orbitplan:orbitplan@localhost:5432/orbitplan DATABASE_SSL=false node cloud-server.js",
+    "test": "node tests/source-contract.js && node tests/production-config-contract.js && node tests/netlify-adapter-smoke.js && node tests/cloud-smoke.js && node tests/calendar-oauth-smoke.js && node tests/collaboration-smoke.js && node tests/session-security-smoke.js && node tests/android-native-collaboration-contract.js && node tests/advanced-suite-smoke.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "pg": "^8.13.1",
+    "serverless-http": "^4.0.0"
+  }
+}

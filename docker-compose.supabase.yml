@@ -1,0 +1,12 @@
+services:
+  orbitplan:
+    build: .
+    restart: unless-stopped
+    ports:
+      - "4175:4175"
+    env_file:
+      - .env.supabase
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 4175

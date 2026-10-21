@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: orbitplan
+      POSTGRES_USER: orbitplan
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - orbitplan-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orbitplan -d orbitplan"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+
+  orbitplan:
+    build: .
+    ports:
+      - "4175:4175"
+    environment:
+      NODE_ENV: production
+      HOST: 0.0.0.0
+      PORT: 4175
+      DATABASE_URL: postgres://orbitplan:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/orbitplan
+      DATABASE_SSL: "false"
+      ORBITPLAN_TOKEN_SECRET: ${ORBITPLAN_TOKEN_SECRET:?set ORBITPLAN_TOKEN_SECRET in .env}
+      CALENDAR_ENCRYPTION_KEY: ${CALENDAR_ENCRYPTION_KEY:?set CALENDAR_ENCRYPTION_KEY in .env}
+      OAUTH_REDIRECT_BASE: ${OAUTH_REDIRECT_BASE:-}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:4175}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      MICROSOFT_CLIENT_ID: ${MICROSOFT_CLIENT_ID:-}
+      MICROSOFT_CLIENT_SECRET: ${MICROSOFT_CLIENT_SECRET:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  orbitplan-postgres:

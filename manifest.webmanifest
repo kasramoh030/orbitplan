@@ -1,0 +1,19 @@
+{
+  "name": "OrbitPlan",
+  "short_name": "OrbitPlan",
+  "description": "A Persian-first study and work planner.",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#f5f7ff",
+  "theme_color": "#6758dc",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
